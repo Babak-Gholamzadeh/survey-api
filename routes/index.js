@@ -20,6 +20,7 @@ router
   .post('/register', validator.register, authController.register)
   .post('/login', validator.login, authController.login)
   .post('/surveys', authenticate, validator.createSurvey, surveyController.createSurvey)
+  .get('/surveys', authenticate, surveyController.getAllSurveys)
 
   // Handle all the response errors
   .use(expressErrorHandler)
