@@ -24,6 +24,7 @@ router
   .get('/surveys/:surveyId', authenticate, surveyController.getOneSurvey)
   .patch('/surveys/:surveyId', authenticate, validator.updateSurvey, surveyController.updateSurvey)
   .delete('/surveys/:surveyId', authenticate, surveyController.removeSurvey)
+  .post('/surveys/:surveyId/answer', authenticate, validator.answerSurvey, surveyController.answerSurvey)
 
   // Handle all the response errors
   .use(expressErrorHandler)

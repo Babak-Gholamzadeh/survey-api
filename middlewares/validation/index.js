@@ -3,6 +3,7 @@ const register = require('./schemas/register.json');
 const login = require('./schemas/login.json');
 const createSurvey = require('./schemas/create-survey.json');
 const updateSurvey = require('./schemas/update-survey.json');
+const answerSurvey = require('./schemas/answer-survey.json');
 
 const validator = schema => {
   const validate = new Ajv({ allErrors: true }).compile(schema);
@@ -19,4 +20,5 @@ module.exports = {
   login: validator(login),
   createSurvey: validator(createSurvey),
   updateSurvey: validator(updateSurvey),
+  answerSurvey: validator(answerSurvey),
 };

@@ -73,10 +73,29 @@ const removeSurvey = asyncHandler(async (req, res) => {
   res.success();
 });
 
+const answerSurvey = asyncHandler(async (req, res) => {
+  const {
+    params: {
+      surveyId
+    },
+    body: {
+      optionId
+    },
+    user: {
+      _id: userId
+    }
+  } = req;
+  const result = await surveyService
+    .answerSurvey({ surveyId, optionId, userId });
+  res.success(result);
+});
+
+
 module.exports = {
   createSurvey,
   getAllSurveys,
   getOneSurvey,
   updateSurvey,
   removeSurvey,
+  answerSurvey,
 };
