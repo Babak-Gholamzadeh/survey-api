@@ -15,6 +15,10 @@ const responseError = (field = 'defaultMessage') => ({
     errors: { [field]: ['unauthorized'] },
     statusCode: 401,
   },
+  SURVEY_NOT_FOUND: {
+    errors: { [field]: ['survey not found'] },
+    statusCode: 404,
+  },
   NOT_FOUND: {
     errors: { [field]: ['not found'] },
     statusCode: 404,

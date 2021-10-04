@@ -11,6 +11,10 @@ const AppError = field => ({
     code: 'UNAUTHORIZED',
     field,
   },
+  SURVEY_NOT_FOUND: {
+    code: 'SURVEY_NOT_FOUND',
+    field,
+  },
 });
 
 module.exports = AppError;

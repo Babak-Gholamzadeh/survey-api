@@ -21,6 +21,7 @@ router
   .post('/login', validator.login, authController.login)
   .post('/surveys', authenticate, validator.createSurvey, surveyController.createSurvey)
   .get('/surveys', authenticate, surveyController.getAllSurveys)
+  .get('/surveys/:surveyId', authenticate, surveyController.getOneSurvey)
 
   // Handle all the response errors
   .use(expressErrorHandler)
