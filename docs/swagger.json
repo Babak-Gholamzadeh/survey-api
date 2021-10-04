@@ -53,6 +53,30 @@
           "email": "a@b.com",
           "password": "123456"
         }
+      },
+      "CreateSurvey": {
+        "type": "object",
+        "required": ["closeTime", "question", "options"],
+        "properties": {
+          "closeTime": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "example": {
+          "closeTime": "20/12/2022",
+          "question": "What is your favorite color?",
+          "options": ["Blue", "Red", "Green", "Yellow"]
+        }
       }
     }
   },
@@ -155,6 +179,59 @@
                   "success": true,
                   "data": {
                     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjdjZmY0ZjNiLTk0NTAtNGE3YS04ZDk2LTRmODM2MjZjZjEyMyJ9LCJpYXQiOjE2MzMzNjEyMjAsImV4cCI6MTYzMzM2NDgyMH0.FAF1b5f_OFi2-JmwiLr0sQRX2NxNfVb073gwoV6V068"
+                  },
+                  "message": "operation was successful"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/surveys": {
+      "post": {
+        "tags": ["Survey"],
+        "summary": "Create a new survey",
+        "description": "",
+        "operationId": "createSurvey",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSurvey"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "_id": {
+                        "type": "string"
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "_id": "02928a66-46c6-4ae0-9189-cfc727642a96"
                   },
                   "message": "operation was successful"
                 }
