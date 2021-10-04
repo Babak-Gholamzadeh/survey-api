@@ -35,6 +35,18 @@ const updateSurvey = async ({ surveyId, closeTime, creatorId }) => {
   return normalizeSurvey(creatorId, result);
 };
 
+const removeSurvey = async ({ surveyId, creatorId }) => {
+  const [survey] = await db('survey').find({ _id: surveyId });
+
+  if (!survey)
+    throw AppError().SURVEY_NOT_FOUND;
+
+  if (survey.creatorId !== creatorId)
+    throw AppError().NO_PERMISSION;
+
+  await db('survey').remove(surveyId);
+};
+
 const normalizeSurvey = (userId, { _id, closeTime, participantIds, question, options }) => {
   const totalParticipants = participantIds.length;
   const option = options.find(op => op.userIds.find(id => userId === id));
@@ -60,4 +72,5 @@ module.exports = {
   getAllSurveys,
   getOneSurvey,
   updateSurvey,
+  removeSurvey,
 };
