@@ -3,6 +3,10 @@ const AppError = field => ({
     code: 'DUPLICATED_EMAIL',
     field,
   },
+  LOGIN_FAILED: {
+    code: 'LOGIN_FAILED',
+    field,
+  },
   UNAUTHORIZED: {
     code: 'UNAUTHORIZED',
     field,

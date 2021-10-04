@@ -3,6 +3,10 @@ const responseError = (field = 'defaultMessage') => ({
     errors: { [field]: ['the email has already been taken'] },
     statusCode: 400,
   },
+  LOGIN_FAILED: {
+    errors: { [field]: ['username/password is incorrect'] },
+    statusCode: 401,
+  },
   BAD_REQUEST: {
     errors: { [field]: ['bad request'] },
     statusCode: 400,

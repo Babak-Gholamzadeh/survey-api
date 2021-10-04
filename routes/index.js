@@ -14,6 +14,7 @@ router
 
   // All the endpoints
   .post('/register', validator.register, authController.register)
+  .post('/login', validator.login, authController.login)
 
   // Handle all the response errors
   .use(expressErrorHandler)
