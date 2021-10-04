@@ -35,6 +35,24 @@
           "email": "a@b.com",
           "password": "123456"
         }
+      },
+      "Login": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "pattern": "^\\S+@\\S+\\.\\S+$"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 3
+          }
+        },
+        "example": {
+          "email": "a@b.com",
+          "password": "123456"
+        }
       }
     }
   },
@@ -85,6 +103,59 @@
                 },
                 "example": {
                   "success": true,
+                  "message": "operation was successful"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Log in a user",
+        "description": "",
+        "operationId": "login",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "token": {
+                        "type": "string"
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjdjZmY0ZjNiLTk0NTAtNGE3YS04ZDk2LTRmODM2MjZjZjEyMyJ9LCJpYXQiOjE2MzMzNjEyMjAsImV4cCI6MTYzMzM2NDgyMH0.FAF1b5f_OFi2-JmwiLr0sQRX2NxNfVb073gwoV6V068"
+                  },
                   "message": "operation was successful"
                 }
               }
