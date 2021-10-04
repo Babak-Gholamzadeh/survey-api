@@ -553,6 +553,46 @@
             }
           }
         }
+      },
+      "delete": {
+        "tags": ["Survey"],
+        "summary": "Remove a survey",
+        "description": "",
+        "operationId": "removeSurvey",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "surveyId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "operation was successful"
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
