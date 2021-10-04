@@ -22,6 +22,7 @@ router
   .post('/surveys', authenticate, validator.createSurvey, surveyController.createSurvey)
   .get('/surveys', authenticate, surveyController.getAllSurveys)
   .get('/surveys/:surveyId', authenticate, surveyController.getOneSurvey)
+  .patch('/surveys/:surveyId', authenticate, validator.updateSurvey, surveyController.updateSurvey)
 
   // Handle all the response errors
   .use(expressErrorHandler)

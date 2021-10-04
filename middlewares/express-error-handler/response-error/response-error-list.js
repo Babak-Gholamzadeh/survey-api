@@ -7,6 +7,9 @@ const responseError = (field = 'defaultMessage') => ({
     errors: { [field]: ['username/password is incorrect'] },
     statusCode: 401,
   },
+  NO_PERMISSION: {
+    errors: { [field]: ['you do not have permission to update this survey']}
+  },
   BAD_REQUEST: {
     errors: { [field]: ['bad request'] },
     statusCode: 400,

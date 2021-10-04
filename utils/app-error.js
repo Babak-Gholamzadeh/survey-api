@@ -7,6 +7,10 @@ const AppError = field => ({
     code: 'LOGIN_FAILED',
     field,
   },
+  NO_PERMISSION: {
+    code: 'NO_PERMISSION',
+    field,
+  },
   UNAUTHORIZED: {
     code: 'UNAUTHORIZED',
     field,

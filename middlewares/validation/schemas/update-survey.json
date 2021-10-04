@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "required": ["closeTime"],
+  "properties": {
+    "closeTime": {
+      "type": "string"
+    }
+  }
+}

@@ -42,8 +42,26 @@ const getOneSurvey = asyncHandler(async (req, res) => {
   res.success(result);
 });
 
+const updateSurvey = asyncHandler(async (req, res) => {
+  const {
+    params: {
+      surveyId
+    },
+    body: {
+      closeTime
+    },
+    user: {
+      _id: creatorId
+    },
+  } = req;
+  const result = await surveyService
+    .updateSurvey({ surveyId, closeTime, creatorId });
+  res.success(result);
+});
+
 module.exports = {
   createSurvey,
   getAllSurveys,
   getOneSurvey,
+  updateSurvey,
 };
