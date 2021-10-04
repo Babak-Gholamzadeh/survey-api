@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "required": ["optionId"],
+  "properties": {
+    "optionId": {
+      "type": "string"
+    }
+  }
+}

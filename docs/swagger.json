@@ -1,0 +1,723 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Survey App",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Register": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "pattern": "^\\S+@\\S+\\.\\S+$"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 3
+          }
+        },
+        "example": {
+          "email": "a@b.com",
+          "password": "123456"
+        }
+      },
+      "Login": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "pattern": "^\\S+@\\S+\\.\\S+$"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 3
+          }
+        },
+        "example": {
+          "email": "a@b.com",
+          "password": "123456"
+        }
+      },
+      "CreateSurvey": {
+        "type": "object",
+        "required": ["closeTime", "question", "options"],
+        "properties": {
+          "closeTime": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "example": {
+          "closeTime": "20/12/2022",
+          "question": "What is your favorite color?",
+          "options": ["Blue", "Red", "Green", "Yellow"]
+        }
+      },
+      "UpdateSurvey": {
+        "type": "object",
+        "required": ["closeTime"],
+        "properties": {
+          "closeTime": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "closeTime": "20/12/2022"
+        }
+      },
+      "AnswerSurvey": {
+        "type": "object",
+        "required": ["optionId"],
+        "properties": {
+          "optionId": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "optionId": "8b49b575-a574-47f2-8770-9dadd6986096"
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "Survey"
+    }
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Register a new user",
+        "description": "",
+        "operationId": "register",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Register"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "operation was successful"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Log in a user",
+        "description": "",
+        "operationId": "login",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "token": {
+                        "type": "string"
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjdjZmY0ZjNiLTk0NTAtNGE3YS04ZDk2LTRmODM2MjZjZjEyMyJ9LCJpYXQiOjE2MzMzNjEyMjAsImV4cCI6MTYzMzM2NDgyMH0.FAF1b5f_OFi2-JmwiLr0sQRX2NxNfVb073gwoV6V068"
+                  },
+                  "message": "operation was successful"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/surveys": {
+      "post": {
+        "tags": ["Survey"],
+        "summary": "Create a new survey",
+        "description": "",
+        "operationId": "createSurvey",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSurvey"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "_id": {
+                        "type": "string"
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "_id": "02928a66-46c6-4ae0-9189-cfc727642a96"
+                  },
+                  "message": "operation was successful"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Survey"],
+        "summary": "Get all surveys",
+        "description": "",
+        "operationId": "getAllSurveys",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "surveys": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "_id": {
+                            "type": "string"
+                          },
+                          "closeTime": {
+                            "type": "string"
+                          },
+                          "totalParticipants": {
+                            "type": "number"
+                          },
+                          "yourAnswer": {
+                            "type": "string"
+                          },
+                          "question": {
+                            "type": "string"
+                          },
+                          "options": {
+                            "type": "array",
+                            "items": {
+                              "_id": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "totalUsers": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "surveys": [
+                      {
+                        "_id": "ef7d42fe-38b6-4c00-a156-98e2f7a094b5",
+                        "closeTime": "20/12/2021",
+                        "totalParticipants": 2,
+                        "yourAnswer": "8b49b575-a574-47f2-8770-9dadd6986096",
+                        "question": "What is your favorite color?",
+                        "options": [
+                          {
+                            "_id": "59d93fcd-5100-4eb0-8959-39821392c7cd",
+                            "description": "Blue",
+                            "totalUsers": 1
+                          },
+                          {
+                            "_id": "8b49b575-a574-47f2-8770-9dadd6986096",
+                            "description": "Green",
+                            "totalUsers": 1
+                          },
+                          {
+                            "_id": "602e4306-afc7-4c0d-8fef-dcb6fa7a84f5",
+                            "description": "Red",
+                            "totalUsers": 0
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "message": "operation was successful"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/surveys/{surveyId}": {
+      "get": {
+        "tags": ["Survey"],
+        "summary": "Get a survey",
+        "description": "",
+        "operationId": "getOneSurvey",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "surveyId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "_id": {
+                        "type": "string"
+                      },
+                      "closeTime": {
+                        "type": "string"
+                      },
+                      "totalParticipants": {
+                        "type": "number"
+                      },
+                      "yourAnswer": {
+                        "type": "string"
+                      },
+                      "question": {
+                        "type": "string"
+                      },
+                      "options": {
+                        "type": "array",
+                        "items": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "totalUsers": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "_id": "ef7d42fe-38b6-4c00-a156-98e2f7a094b5",
+                    "closeTime": "20/12/2021",
+                    "totalParticipants": 2,
+                    "yourAnswer": "8b49b575-a574-47f2-8770-9dadd6986096",
+                    "question": "What is your favorite color?",
+                    "options": [
+                      {
+                        "_id": "59d93fcd-5100-4eb0-8959-39821392c7cd",
+                        "description": "Blue",
+                        "totalUsers": 1
+                      },
+                      {
+                        "_id": "8b49b575-a574-47f2-8770-9dadd6986096",
+                        "description": "Green",
+                        "totalUsers": 1
+                      },
+                      {
+                        "_id": "602e4306-afc7-4c0d-8fef-dcb6fa7a84f5",
+                        "description": "Red",
+                        "totalUsers": 0
+                      }
+                    ]
+                  },
+                  "message": "operation was successful"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Survey"],
+        "summary": "Update a survey",
+        "description": "",
+        "operationId": "updateSurvey",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "surveyId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSurvey"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "_id": {
+                        "type": "string"
+                      },
+                      "closeTime": {
+                        "type": "string"
+                      },
+                      "totalParticipants": {
+                        "type": "number"
+                      },
+                      "yourAnswer": {
+                        "type": "string"
+                      },
+                      "question": {
+                        "type": "string"
+                      },
+                      "options": {
+                        "type": "array",
+                        "items": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "totalUsers": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "_id": "ef7d42fe-38b6-4c00-a156-98e2f7a094b5",
+                    "closeTime": "20/12/2021",
+                    "totalParticipants": 2,
+                    "yourAnswer": "8b49b575-a574-47f2-8770-9dadd6986096",
+                    "question": "What is your favorite color?",
+                    "options": [
+                      {
+                        "_id": "59d93fcd-5100-4eb0-8959-39821392c7cd",
+                        "description": "Blue",
+                        "totalUsers": 1
+                      },
+                      {
+                        "_id": "8b49b575-a574-47f2-8770-9dadd6986096",
+                        "description": "Green",
+                        "totalUsers": 1
+                      },
+                      {
+                        "_id": "602e4306-afc7-4c0d-8fef-dcb6fa7a84f5",
+                        "description": "Red",
+                        "totalUsers": 0
+                      }
+                    ]
+                  },
+                  "message": "operation was successful"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Survey"],
+        "summary": "Remove a survey",
+        "description": "",
+        "operationId": "removeSurvey",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "surveyId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "operation was successful"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/surveys/{surveyId}/answer": {
+      "post": {
+        "tags": ["Survey"],
+        "summary": "Answer a survey",
+        "description": "",
+        "operationId": "answerSurvey",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "surveyId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerSurvey"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "_id": {
+                        "type": "string"
+                      },
+                      "closeTime": {
+                        "type": "string"
+                      },
+                      "totalParticipants": {
+                        "type": "number"
+                      },
+                      "yourAnswer": {
+                        "type": "string"
+                      },
+                      "question": {
+                        "type": "string"
+                      },
+                      "options": {
+                        "type": "array",
+                        "items": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "totalUsers": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "_id": "ef7d42fe-38b6-4c00-a156-98e2f7a094b5",
+                    "closeTime": "20/12/2021",
+                    "totalParticipants": 2,
+                    "yourAnswer": "8b49b575-a574-47f2-8770-9dadd6986096",
+                    "question": "What is your favorite color?",
+                    "options": [
+                      {
+                        "_id": "59d93fcd-5100-4eb0-8959-39821392c7cd",
+                        "description": "Blue",
+                        "totalUsers": 1
+                      },
+                      {
+                        "_id": "8b49b575-a574-47f2-8770-9dadd6986096",
+                        "description": "Green",
+                        "totalUsers": 1
+                      },
+                      {
+                        "_id": "602e4306-afc7-4c0d-8fef-dcb6fa7a84f5",
+                        "description": "Red",
+                        "totalUsers": 0
+                      }
+                    ]
+                  },
+                  "message": "operation was successful"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
