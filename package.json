@@ -8,7 +8,10 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "set NODE_ENV=production& node index.js",
+    "start:dev": "set NODE_ENV=development& nodemon index.js",
+    "test": "set NODE_ENV=test& jest",
+    "test:watch": "set NODE_ENV=test& jest --watchAll"
   },
   "repository": {
     "type": "git",
@@ -20,5 +23,29 @@
   "bugs": {
     "url": "https://github.com/Babak-Gholamzadeh/survey-api/issues"
   },
-  "homepage": "https://github.com/Babak-Gholamzadeh/survey-api#readme"
+  "homepage": "https://github.com/Babak-Gholamzadeh/survey-api#readme",
+  "dependencies": {
+    "ajv": "^8.6.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "swagger-ui-express": "^4.1.6",
+    "uuid": "^8.3.2",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jest": "^24.5.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "faker": "^5.5.3",
+    "jest": "^27.2.4",
+    "nodemon": "^2.0.13",
+    "prettier": "^2.4.1",
+    "supertest": "^6.1.6"
+  }
 }
