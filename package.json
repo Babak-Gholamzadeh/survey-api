@@ -1,0 +1,24 @@
+{
+  "name": "survey-api",
+  "version": "1.0.0",
+  "description": "Building an API that enables the creation and taking of user surveys",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Babak-Gholamzadeh/survey-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Babak-Gholamzadeh/survey-api/issues"
+  },
+  "homepage": "https://github.com/Babak-Gholamzadeh/survey-api#readme"
+}
