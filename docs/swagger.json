@@ -77,6 +77,18 @@
           "question": "What is your favorite color?",
           "options": ["Blue", "Red", "Green", "Yellow"]
         }
+      },
+      "UpdateSurvey": {
+        "type": "object",
+        "required": ["closeTime"],
+        "properties": {
+          "closeTime": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "closeTime": "20/12/2022"
+        }
       }
     }
   },
@@ -354,6 +366,113 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "_id": {
+                        "type": "string"
+                      },
+                      "closeTime": {
+                        "type": "string"
+                      },
+                      "totalParticipants": {
+                        "type": "number"
+                      },
+                      "yourAnswer": {
+                        "type": "string"
+                      },
+                      "question": {
+                        "type": "string"
+                      },
+                      "options": {
+                        "type": "array",
+                        "items": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "totalUsers": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "_id": "ef7d42fe-38b6-4c00-a156-98e2f7a094b5",
+                    "closeTime": "20/12/2021",
+                    "totalParticipants": 2,
+                    "yourAnswer": "8b49b575-a574-47f2-8770-9dadd6986096",
+                    "question": "What is your favorite color?",
+                    "options": [
+                      {
+                        "_id": "59d93fcd-5100-4eb0-8959-39821392c7cd",
+                        "description": "Blue",
+                        "totalUsers": 1
+                      },
+                      {
+                        "_id": "8b49b575-a574-47f2-8770-9dadd6986096",
+                        "description": "Green",
+                        "totalUsers": 1
+                      },
+                      {
+                        "_id": "602e4306-afc7-4c0d-8fef-dcb6fa7a84f5",
+                        "description": "Red",
+                        "totalUsers": 0
+                      }
+                    ]
+                  },
+                  "message": "operation was successful"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Survey"],
+        "summary": "Update a survey",
+        "description": "",
+        "operationId": "updateSurvey",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "surveyId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSurvey"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
