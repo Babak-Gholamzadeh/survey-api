@@ -2,6 +2,7 @@ const router = require('express').Router();
 const {
   expressResponsehandler,
   validator,
+  authenticate,
   expressErrorHandler,
 } = require('../middlewares');
 const { authController } = require('../controllers');
